@@ -1,4 +1,4 @@
-# CMake 3.9 was released in 2017/07
+# CMake 3.9 was released in 2017/07BUILD_STATIC_LIBS
 #  As of 2023, many versions of Linux, NetBSD and FreeBSD provide,
 #   and many OpenWRT packages require, much newer CMake packages.
 #  We're stopping before 3.10 because that version starts requiring
@@ -19,30 +19,31 @@ set(CMAKE_C_FLAGS_RELEASE   "${CMAKE_C_FLAGS_RELEASE} -O2")
 include(CTest)
 
 # Set some packaging variables.
-set(CPACK_PACKAGE_NAME              "${PROJECT_NAME}")
-set(CPACK_PACKAGE_VERSION_MAJOR     "${PROJECT_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR     "${PROJECT_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH     "${PROJECT_VERSION_PATCH}")
-set(JSON_C_BUGREPORT                "json-c@googlegroups.com")
-set(CPACK_SOURCE_IGNORE_FILES
-        ${PROJECT_SOURCE_DIR}/build
-        ${PROJECT_SOURCE_DIR}/cmake-build-debug
-        ${PROJECT_SOURCE_DIR}/pack
-        ${PROJECT_SOURCE_DIR}/.idea
-        ${PROJECT_SOURCE_DIR}/.DS_Store
-        ${PROJECT_SOURCE_DIR}/.git
-        ${PROJECT_SOURCE_DIR}/.vscode)
+#set(CPACK_PACKAGE_NAME              "${PROJECT_NAME}")
+#set(CPACK_PACKAGE_VERSION_MAJOR     "${PROJECT_VERSION_MAJOR}")
+#set(CPACK_PACKAGE_VERSION_MINOR     "${PROJECT_VERSION_MINOR}")
+#set(CPACK_PACKAGE_VERSION_PATCH     "${PROJECT_VERSION_PATCH}")
+#set(JSON_C_BUGREPORT                "json-c@googlegroups.com")
+#set(CPACK_SOURCE_IGNORE_FILES
+#        ${PROJECT_SOURCE_DIR}/build
+#        ${PROJECT_SOURCE_DIR}/cmake-build-debug
+#        ${PROJECT_SOURCE_DIR}/pack
+#        ${PROJECT_SOURCE_DIR}/.idea
+#        ${PROJECT_SOURCE_DIR}/.DS_Store
+#        ${PROJECT_SOURCE_DIR}/.git
+#        ${PROJECT_SOURCE_DIR}/.vscode)
 
 include(CheckSymbolExists)
 include(CheckIncludeFile)
 include(CheckIncludeFiles)
 include(CheckCSourceCompiles)
 include(CheckTypeSize)
-include(CPack)
+#include(CPack)
 include(GNUInstallDirs)
+set (CMAKE_INSTALL_LIBDIR lib)
 include(CMakePackageConfigHelpers)
 
-option(BUILD_SHARED_LIBS  "Default to building shared libraries" ON)
+option(BUILD_SHARED_LIBS  "Default to building shared libraries" OFF)
 option(BUILD_STATIC_LIBS  "Default to building static libraries" ON)
 
 if (BUILD_SHARED_LIBS)
@@ -555,7 +556,7 @@ if (UNIX OR MINGW OR CYGWIN)
     install(FILES ${PROJECT_BINARY_DIR}/json-c.pc DESTINATION "${INSTALL_PKGCONFIG_DIR}")
 endif ()
 
-install(FILES ${JSON_C_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/json-c)
+install(FILES ${JSON_C_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/json-c)
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING AND
    (NOT MSVC OR NOT (MSVC_VERSION LESS 1800)) # Tests need at least VS2013
