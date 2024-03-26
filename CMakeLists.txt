@@ -42,12 +42,12 @@ include(CPack)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-option(BUILD_SHARED_LIBS  "Default to building shared libraries" ON)
+#option(BUILD_SHARED_LIBS  "Default to building shared libraries" ON)
 option(BUILD_STATIC_LIBS  "Default to building static libraries" ON)
 
-if (BUILD_SHARED_LIBS)
+#if (BUILD_SHARED_LIBS)
     add_definitions(-D JSON_C_DLL)
-endif()
+#endif()
 
 # Generate a release merge and test it to verify the correctness of republishing the package.
 ADD_CUSTOM_TARGET(distcheck
@@ -450,7 +450,7 @@ endif()
 # XXX for a normal full distribution we'll need to figure out
 # XXX how to build both shared and static libraries.
 # Probably leverage that to build a local VALGRIND=1 library for testing too.
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
     ${JSON_C_SOURCES}
     ${JSON_C_HEADERS}
 )
@@ -469,7 +469,7 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_REQUIRED_LIBRARIES})
 
 # Allow to build static and shared libraries at the same time
-if (BUILD_STATIC_LIBS AND BUILD_SHARED_LIBS)
+#if (BUILD_STATIC_LIBS AND BUILD_SHARED_LIBS)
     set(STATIC_LIB ${PROJECT_NAME}-static)
     add_library(${STATIC_LIB} STATIC
         ${JSON_C_SOURCES}
@@ -490,7 +490,7 @@ if (BUILD_STATIC_LIBS AND BUILD_SHARED_LIBS)
     )
     endif()
     list(APPEND CMAKE_TARGETS ${STATIC_LIB})
-endif ()
+#endif ()
 
 # Always create new install dirs with 0755 permissions, regardless of umask
 set(CMAKE_INSTALL_DEFAULT_DIRECTORY_PERMISSIONS
