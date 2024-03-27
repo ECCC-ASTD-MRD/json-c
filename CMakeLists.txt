@@ -18,12 +18,12 @@ set(CMAKE_C_FLAGS_RELEASE   "${CMAKE_C_FLAGS_RELEASE} -O2")
 
 include(CTest)
 
-# Set some packaging variables.
-set(CPACK_PACKAGE_NAME              "${PROJECT_NAME}")
-set(CPACK_PACKAGE_VERSION_MAJOR     "${PROJECT_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR     "${PROJECT_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH     "${PROJECT_VERSION_PATCH}")
-set(JSON_C_BUGREPORT                "json-c@googlegroups.com")
+# Set some packaging variables (CONFLICT with master CPack)
+#set(CPACK_PACKAGE_NAME              "${PROJECT_NAME}")
+#set(CPACK_PACKAGE_VERSION_MAJOR     "${PROJECT_VERSION_MAJOR}")
+#set(CPACK_PACKAGE_VERSION_MINOR     "${PROJECT_VERSION_MINOR}")
+#set(CPACK_PACKAGE_VERSION_PATCH     "${PROJECT_VERSION_PATCH}")
+#set(JSON_C_BUGREPORT                "json-c@googlegroups.com")
 set(CPACK_SOURCE_IGNORE_FILES
         ${PROJECT_SOURCE_DIR}/build
         ${PROJECT_SOURCE_DIR}/cmake-build-debug
@@ -38,9 +38,10 @@ include(CheckIncludeFile)
 include(CheckIncludeFiles)
 include(CheckCSourceCompiles)
 include(CheckTypeSize)
-include(CPack)
+#include(CPack)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+
 
 #option(BUILD_SHARED_LIBS  "Default to building shared libraries" ON)
 option(BUILD_STATIC_LIBS  "Default to building static libraries" ON)
@@ -533,8 +534,8 @@ if (UNIX OR MINGW OR CYGWIN)
     # exec_prefix is prefix by default and CMake does not have the
     # concept.
     SET(exec_prefix ${CMAKE_INSTALL_PREFIX})
-    SET(libdir ${CMAKE_INSTALL_FULL_LIBDIR})
-    SET(includedir ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+    SET(libdir ${CMAKE_INSTALL_LIBDIR})
+    SET(includedir ${CMAKE_INSTALL_INCLUDEDIR})
     SET(VERSION ${PROJECT_VERSION})
 
 	# Linking against the static json-c requires
@@ -558,7 +559,7 @@ if (UNIX OR MINGW OR CYGWIN)
     install(FILES ${PROJECT_BINARY_DIR}/json-c.pc DESTINATION "${INSTALL_PKGCONFIG_DIR}")
 endif ()
 
-install(FILES ${JSON_C_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/json-c)
+install(FILES ${JSON_C_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/json-c)
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING AND
    (NOT MSVC OR NOT (MSVC_VERSION LESS 1800)) # Tests need at least VS2013
