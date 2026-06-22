@@ -136,7 +136,7 @@ if ((MSVC AND NOT (MSVC_VERSION LESS 1800)) OR MINGW OR CYGWIN OR UNIX)
     check_symbol_exists(INFINITY    "math.h" HAVE_DECL_INFINITY)
     check_symbol_exists(isinf       "math.h" HAVE_DECL_ISINF)
     check_symbol_exists(isnan       "math.h" HAVE_DECL_ISNAN)
-    check_symbol_exists(nan         "math.h" HAVE_DECL_NAN)
+    check_symbol_exists(NAN         "math.h" HAVE_DECL_NAN)
 endif()
 
 check_symbol_exists(_doprnt         "stdio.h" HAVE_DOPRNT)
