@@ -8,7 +8,7 @@ if (DOXYGEN_FOUND)
 	  ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 	message(STATUS "Wrote ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile")
 
-	add_custom_target(doc
+	add_custom_target(${PROJECT_NAME}_doc
 	COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
 else (DOXYGEN_FOUND)
